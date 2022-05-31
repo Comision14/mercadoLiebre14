@@ -1,0 +1,11 @@
+[
+   {
+      "id": 1,
+      "name": "Eric",
+      "surname": "Mena",
+      "email": "menaericdaniel@gmail.com",
+      "pass": "$2a$10$mkXGp7rvCv6LVhzqihxWWehLxWV3eHu/S5ycvKZHJSJcRF7PhhVkS",
+      "avatar": "default.png",
+      "rol": "user"
+   }
+]

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('partials/head', {title: 'Formulario de creación' }) %>
+
+	<body>
+		<!-- Header -->
+		<%- include('partials/headerNavbar') %>
+			<!-- /Header -->
+
+			<div class="container products-wrapper">
+				<div class="row">
+					<div class="col-12">
+						<h2 class="products-title">Formulario de creación de productos</h2>
+					</div>
+				<div class="col-12">
+					<form method="POST" enctype="multipart/form-data">
+						<div class="row product-detail">
+							<div class="col-12 col-md-8">
+								<div class="row">
+									<div class="col-12">
+										<label for="name" class="form-label">Nombre del producto:</label>
+										<input type="text" id="name" name="name" placeholder="Ej: Zapatillas Reebok"
+											class="form-input">
+									</div>
+									<div class="col-12 col-md-6">
+										<label for="price" class="form-label">Precio del producto:</label>
+										<input type="number" id="price" name="price" placeholder="Ej: 5678"
+											class="form-input">
+									</div>
+									<div class="col-12 col-md-6">
+										<label for="discount" class="form-label">Descuento:</label>
+										<input type="number" id="discount" name="discount" placeholder="Ej: 15"
+											class="form-input">
+									</div>
+									<div class="col-12 col-md-6">
+										<label for="category" class="form-label">Categoría:</label>
+										<select name="category" id="category" class="form-input">
+											<option value="" hidden selected>Elegí</option>
+											<option value="in-sale">En oferta</option>
+											<option value="visited">Últimos agregados</option>
+										</select>
+									</div>
+									<div class="col-12 col-md-6">
+
+										<label for="category" class="form-label">Sección:</label>
+										<select id="category" class="form-input">
+											<option value="" hidden selected>Elegí</option>
+											<option value="in-sale">En oferta</option>
+											<option value="visited">Últimos agregados</option>
+										</select>
+									</div>
+									<div class="col-12">
+										<label for="description" class="form-label">Descripción:</label>
+										<textarea rows="1" name="description" id="description" class="form-input"
+											style="resize: none;"></textarea>
+									</div>
+									<div class="col-6">
+										<label for="image" class="buy-now-button">Agregar imagen</label>
+										<input type="file" id="image" name="image" accept="image/*" hidden>
+									</div>
+									<div class="col-6">
+										<button type="submit" class="buy-now-button" style="width: 100%;">Guardar
+											producto</button>
+									</div>
+
+								</div>
+
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="mt-5">
+									<img class="img-fluid" src="" id="imgPreview" alt="">
+
+								</div>
+							</div>
+
+						</div>
+				</div>
+				<div class="col-12 col-md-6">
+
+
+
+				</div>
+
+			</div>
+			</form>
+			</div>
+
+			<!-- /todos los productos -->
+
+			<!-- footer -->
+			<%- include('partials/footer') %>
+				<!-- /footer -->
+				<script>
+					document.getElementById('image').addEventListener('change', (e) => {
+						let reader = new FileReader();
+						reader.readAsDataURL(e.target.files[0])
+						reader.onload = () => {
+							document.getElementById('imgPreview').src = reader.result
+						}
+					})
+				</script>
+	</body>
+
+</html>
