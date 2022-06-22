@@ -1,0 +1,18 @@
+  {
+      "id": 17,
+      "name": "Galaxy A52(SM-A525MZKEARO) clasificado 4.6 de 5 por 60",
+      "description": "Disfrutá de los detalles realmente vibrantes con la pantalla Super AMOLED Display FHD+, que alcanza los 800 nits¹ para mayor claridad, incluso con la luz de día brillante. Eye Comfort Shield² reduce la luz azul y la pantalla extrafluida mantiene la vista relajada, ya sea que estés jugando o navegando. Todo en la amplia pantalla Infinity-O Display de 6,5 pulgadas.",
+      "price": 25000,
+      "discount": 10,
+      "image": "1652446435563_products_.png",
+      "category": "visited"
+   },
+   {
+      "id": 18,
+      "name": "Galaxy M12 Negro",
+      "description": "Ampliá tu vista con la pantalla Infinity-V de 6.5 pulgadas del Galaxy M12 y mirá lo que te estabas perdiendo. Con la tecnología HD +, tu contenido diario se ve nítido y claro.",
+      "price": 30000,
+      "discount": 5,
+      "image": "1652446568681_products_.png",
+      "category": "in-sale"
+   }
