@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <!-- Include Head -->
-<%- include('partials/head', {title: 'Editando: ' + product.name}) %>
+<%- include('partials/head', {title: 'Editando: ' + product.title}) %>
 <body>
 	<!-- Header -->
 	<%- include('partials/headerNavbar') %>
@@ -10,15 +10,15 @@
 	<div class="container products-wrapper">
 		<div class="row">
 			<div class="col-12">
-				<h2 class="products-title">Estás editando: <i><%= product.name %></i></h2>
+				<h2 class="products-title">Estás editando: <i><%= product.title %></i></h2>
 			</div>
 		</div>
 		<div class="col-12">
 			<form action="/products/update/<%= product.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
 				<div class="row product-detail">
 					<div class="col-12 col-md-6">
-						<label for="name" class="form-label">Nombre del producto:</label>
-						<input type="text" id="name" name="name" placeholder="Ej: Zapatillas Reebok" class="form-input" value="<%= product.name %>">
+						<label for="title" class="form-label">Nombre del producto:</label>
+						<input type="text" id="title" name="title" placeholder="Ej: Zapatillas Reebok" class="form-input" value="<%= product.title %>">
 					</div>
 					<div class="col-12 col-md-6">
 						<label for="price" class="form-label">Precio del producto:</label>
@@ -29,10 +29,12 @@
 						<input type="number" id="discount" name="discount" placeholder="Ej: 15" class="form-input" value="<%= product.discount %>">
 					</div>
 					<div class="col-12 col-md-6">
-						<label for="category" class="form-label">Categoría:</label>
-						<select name="category" id="category" class="form-input">
-							<option value="in-sale" <%= product.category === "in-sale" ? 'selected' : null %>  >En oferta</option>
-							<option value="visited" <%= product.category === "visited" && 'selected' %>  >Últimos agregados</option>
+						<label for="categoryId" class="form-label">Categoría:</label>
+						<select name="categoryId" id="categoryId" class="form-input">
+							<option value="" hidden selected>Elegí</option>
+							<% categories.forEach(category => { %>
+								<option value="<%= category.id %>" <%= product.categoryId === category.id ? 'selected' : null %>><%= category.name %> </option>
+							<% }) %>
 						</select>
 					</div>
 					<div class="col-12 col-md-6">
@@ -42,17 +44,17 @@
 					<div class="col-12 col-md-6">
 						<div class="row">
 							<div class="col-6">
-								<img src="/images/products/<%= product.image %>" alt="">
+								<img src="/images/products/<%= product.images[0].file %>" alt="">
 							</div>
 							<div class="col-6">
-								<label for="image" class="form-label">Imagen:</label>
+								<label for="image" class="form-label">Imagen principal:</label>
 								<input type="file" id="image" name="image"class="form-input" accept="image/*">
 							</div>
 						</div>
 						
 					</div>
 					<div class="col-12">
-						<button type="submit" class="buy-now-button">Guardar producto</button>
+						<button type="submit" class="buy-now-button">Guardar cambios</button>
 					</div>
 				</div>
 			</form>

@@ -1,30 +1,59 @@
-const fs = require('fs');
-const path = require('path');
-
-const productsFilePath = path.join(__dirname, '../data/productsDataBase.json');
-const productsJSON = fs.readFileSync(productsFilePath, 'utf-8');
-const products = JSON.parse(productsJSON);
+const db = require('../database/models');
+const {Op} = require('sequelize')
 
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
 const controller = {
 	index: (req, res) => {
-		let productsVisited = products.filter(product => product.category === "visited");
-		let productsInSale = products.filter(product => product.category === "in-sale");
-		return res.render('index',{
-			productsVisited,
-			productsInSale,
-			toThousand
+		let productsVisited = db.Product.findAll({
+			where : {
+				categoryId : 1
+			},
+			include : ['images']
 		})
+		let productsInSale = db.Product.findAll({
+			where : {
+				categoryId : 2
+			},
+			include : ['images']
+		})
+		Promise.all([productsVisited,productsInSale])
+			.then(([productsVisited,productsInSale]) => {
+				return res.render('index',{
+					productsVisited,
+					productsInSale,
+					toThousand
+				})
+			})
+			.catch(error => console.log(error))
 	},
 	search: (req, res) => {
+
 		const {keywords} = req.query;
-		let result = products.filter(product => product.name.toLowerCase().includes(keywords.toLowerCase()) ||  product.description.toLowerCase().includes(keywords.toLowerCase()))
-		return res.render('results',{
-			result,
-			keywords,
-			toThousand
-		})
+
+		db.Product.findAll({
+			where : {
+				[Op.or] : [
+					{
+						title : {
+							[Op.substring] : keywords
+						}
+					},
+					{
+						description : {
+							[Op.substring] : keywords
+						}
+					}
+				]
+			},
+			include : ['images']
+		}).then(result => {
+			return res.render('results',{
+				result,
+				keywords,
+				toThousand
+			})
+		}).catch(error => console.log(error))
 	},
 };
 

@@ -1,5 +1,5 @@
 "use strict";
-const bcryptjs = require('bcryptjs')
+const bcryptjs = require('bcryptjs');
 
 const users = [
   {

@@ -2,11 +2,11 @@
 
 const categories = [
   {
-    name: "visited",
+    name: "Ultimos agregados",
     createdAt: new Date(),
   },
   {
-    name: "in-sale",
+    name: "En oferta",
     createdAt: new Date(),
   },
 ];

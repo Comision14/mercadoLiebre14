@@ -8,93 +8,138 @@ const readProducts = () => {
 }
 const saveProducts = (products) => fs.writeFileSync(productsFilePath, JSON.stringify(products,null,3));
 
+const db = require('../database/models')
 const toThousand = n => n.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
 const controller = {
 	// Root - Show all products
 	index: (req, res) => {
-		let products = readProducts()
-		return res.render('products',{
-			products,
-			toThousand
+
+		db.Product.findAll({
+			include : ['images']
 		})
+			.then(products => {
+				return res.render('products',{
+					products,
+					toThousand
+				})
+			})
+			.catch(error => console.log(error))
 	},
 
 	// Detail - Detail from one product
 	detail: (req, res) => {
-		const product = readProducts().find(product => product.id === +req.params.id);
-		return res.render('detail',{
-			product,
-			toThousand
+		
+		db.Product.findByPk(req.params.id,{
+			include : ['images']
 		})
+			.then(product => {
+				return res.render('detail',{
+					product,
+					toThousand
+				})
+			})
+			.catch(error => console.log(error))		
 	},
 
 	// Create - Form to create
 	create: (req, res) => {
-		return res.render('product-create-form')
+		db.Category.findAll()
+			.then(categories => {
+				return res.render('product-create-form',{
+					categories
+				})
+			})
+			.catch(error => console.log(error))		
 	},
 	
 	// Create -  Method to store
 	store: (req, res) => {
-		let products = readProducts();
+		
+		const {title,price,discount,description,categoryId} = req.body;
 
-		const {name,price,discount,description,category} = req.body;
-
-		let newProduct = {
-			id : products[products.length - 1].id + 1,
-			name : name.trim(),
-			description : description.trim(),
+		db.Product.create({
+			title : title.trim(),
 			price : +price,
 			discount : +discount,
-			image : req.file ? req.file.filename : "default-image.png",
-			category
-		}
-
-		products.push(newProduct);
-		saveProducts(products)
-
-		return res.redirect('/products')
+			description : description.trim(),
+			categoryId 
+		})
+			.then(product => {
+				if(req.files.length > 0){
+					let images = req.files.map(({filename},i) => {
+						let image = {
+							file : filename,
+							productId : product.id,
+							primary : i === 0 ? 1 : 0
+						}
+						return image
+					})
+					db.Image.bulkCreate(images,{validate :true})
+						.then( (result) => console.log(result))		
+				}
+				return res.redirect('/products')
+			})
+			.catch(error => console.log(error))	
 	},
 
 	// Update - Form to edit
 	edit: (req, res) => {
-		let products = readProducts();
-		let product = products.find(product => product.id === +req.params.id);
-		return res.render('product-edit-form',{
-			product
+
+		let product = db.Product.findByPk(req.params.id,{
+			include : ['images']
 		})
+		let categories = db.Category.findAll()
+
+		Promise.all([product,categories])
+			.then(([product,categories]) => {
+				return res.render('product-edit-form',{
+					product,
+					categories
+				})
+			})
+			.catch(error => console.log(error))		
+	
 	},
 	// Update - Method to update
 	update: (req, res) => {
-		let products = readProducts();
-		const {name, price,discount, description, category} = req.body;
 
-		const product = products.find(product => product.id === +req.params.id)
+		const {title, price,discount,description, categoryId} =req.body;
 		
-		const productsModify = products.map(product => {
-			if(product.id === +req.params.id){
-				let productModify = {
-					...product,
-					name : name.trim(), 
-					price : +price,
-					discount : +discount,
-					description : description.trim(), 
-					image : req.file ? req.file.filename : product.image,
-					category
+		db.Product.update(
+			{
+				title : title.trim(),
+				price : +price,
+				discount : +discount,
+				description : description.trim(),
+				categoryId 
+			},
+			{
+				where : {
+					id : req.params.id
 				}
-				return productModify
 			}
-			return product
-		});
-
-		if(req.file && product.image !== "default-image.png"){
-			if(fs.existsSync('./public/images/products/' + product.image)){
-				fs.unlinkSync('./public/images/products/' + product.image)
+		).then(async () => {
+			if(req.file){
+				try {
+					await db.Image.update(
+						{
+							file : req.file.filename
+						},
+						{
+							where : {
+								productId : req.params.id,
+								primary : true
+							}
+						}
+					)
+				} catch (error) {
+					console.log(error);
+				}
 			}
-		}
+			return res.redirect('/products');
 
-		saveProducts(productsModify);
-		return res.redirect('/products');
+		}).catch(error => console.log(error))
 	},
 
 	// Delete - Delete one product from DB

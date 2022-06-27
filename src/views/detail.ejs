@@ -17,14 +17,18 @@
 		<div class="product-detail">
 			<div class="row">
 				<div class="col-12 col-lg-8">
-					<img src="/images/products/<%= product.image %>" alt="product image" class="product-detail-img">
+					<% product.images.forEach(image => { %>
+						<% if (image.primary) { %>
+							<img src="/images/products/<%= image.file %>" alt="imagen de producto">
+						<% } %>
+					<% }) %>
 					<p class="product-detail-description">
 						<%= product.description %>
 					</p>
 				</div>
 				<div class="col-12 col-lg-4">
 					<article class="product-detail-info">
-						<h2 class="product-detail-title"> <%= product.name %></h2>
+						<h2 class="product-detail-title"> <%= product.title %></h2>
 						
 						<% if (+product.discount !== 0) { %>
 							<p class="product-detail-price small">
