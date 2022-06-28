@@ -2,11 +2,23 @@
 
 const categories = [
   {
-    name: "Ultimos agregados",
+    name: "Hogar",
     createdAt: new Date(),
   },
   {
-    name: "En oferta",
+    name: "Informática",
+    createdAt: new Date(),
+  },
+  {
+    name: "Audio y Video",
+    createdAt: new Date(),
+  },
+  {
+    name: "Celulares",
+    createdAt: new Date(),
+  },
+  {
+    name: "Tiempo Libre",
     createdAt: new Date(),
   },
 ];
