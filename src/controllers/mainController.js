@@ -7,13 +7,19 @@ const controller = {
 	index: (req, res) => {
 		let productsVisited = db.Product.findAll({
 			where : {
-				categoryId : 1
+				discount : {
+					[Op.lt] : 20
+				}
 			},
+			order : [['id','DESC']],
+			limit : 4,
 			include : ['images']
 		})
 		let productsInSale = db.Product.findAll({
 			where : {
-				categoryId : 2
+				discount : {
+					[Op.gte] : 20
+				}
 			},
 			include : ['images']
 		})
