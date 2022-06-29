@@ -291,6 +291,8 @@ hr {
   background-color: #ffffff;
   border-radius: 8px;
   overflow: hidden;
+  padding: 20px;
+
 }
 
 .product-detail-img {
@@ -355,6 +357,32 @@ hr {
 
 .buy-now-button {
   background-color: var(--light-blue);
+  font-size: 1.6em;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 15px;
+}
+
+.cancel-button {
+  background-color: var(--gray);
+  font-size: 1.6em;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 15px;
+}
+
+.danger-button {
+  background-color: darkred;
   font-size: 1.6em;
   color: #ffffff;
   display: flex;
