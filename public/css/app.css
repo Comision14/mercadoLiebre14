@@ -45,6 +45,10 @@ a {
   color: inherit;
 }
 
+a:hover {
+  color : inherit
+}
+
 figure {
   margin: 0;
   padding: 0;

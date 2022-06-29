@@ -7,5 +7,23 @@
       "pass": "$2a$10$mkXGp7rvCv6LVhzqihxWWehLxWV3eHu/S5ycvKZHJSJcRF7PhhVkS",
       "avatar": "default.png",
       "rol": "user"
+   },
+   {
+      "id": 2,
+      "name": "Daniel",
+      "surname": "Mena",
+      "email": "menaericdaniel@gmail.com",
+      "pass": "$2a$10$.nViuou70kxkg94JSKVGSeuu2XD99LFFwaJNhlp3zu8O/KmCfmMh.",
+      "avatar": "default.png",
+      "rol": "user"
+   },
+   {
+      "id": 3,
+      "name": "Test",
+      "surname": "One",
+      "email": "test@gmail.com",
+      "pass": "$2a$10$QK7JWJ2NYFf8/IQeQ4lKvuNuibKuvKCjJk0.m119n3QI7BDjadrla",
+      "avatar": "default.png",
+      "rol": "user"
    }
 ]
