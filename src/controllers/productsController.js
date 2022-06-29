@@ -1,15 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const productsFilePath = path.join(__dirname, '../data/productsDataBase.json');
-
-const readProducts = () => {
-	const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-	return products
-}
-const saveProducts = (products) => fs.writeFileSync(productsFilePath, JSON.stringify(products,null,3));
-
-const db = require('../database/models')
+const db = require('../database/models');
 const toThousand = n => n.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+const {Op} = require('sequelize')
 
 const controller = {
 	// Root - Show all products
@@ -55,7 +48,6 @@ const controller = {
 	
 	// Create -  Method to store
 	store: (req, res) => {
-		
 		const {title,price,discount,description,categoryId} = req.body;
 
 		db.Product.create({
@@ -143,12 +135,72 @@ const controller = {
 	},
 
 	// Delete - Delete one product from DB
+	delete : (req, res) => {
+
+		db.Product.destroy({
+			where : {
+				id : req.params.id
+			}
+		})
+			.then((info) => {
+				return res.redirect('/products');
+			})
+			.catch(error => console.log(error))
+	},
 	destroy : (req, res) => {
 
-		let products = readProducts();
-		const productsModify = products.filter(product => product.id !== +req.params.id)
-		saveProducts(productsModify);
-		return res.redirect('/products');
+		db.Image.findAll({
+			where : {
+				productId : req.params.id
+			}
+		})
+			.then(images => {
+				images.forEach(image => {
+					if(fs.existsSync(path.resolve(__dirname,'../../public/images/products/' + image.file))){
+						console.log(image.file)
+						fs.unlinkSync(path.resolve(__dirname,'../../public/images/products/' + image.file))
+					}
+				});
+				db.Product.destroy({
+					where : {
+						id : req.params.id
+					},
+					force : true
+				})
+					.then((info) => {
+						console.log('>>>>>>>>>>>>>>>>>>>>>>>>',info);
+						return res.redirect('/products');
+					})
+			})
+			.catch(error => console.log(error))
+	},
+	recycle : (req,res) => {
+		db.Product.findAll({
+			where : {
+				deletedAt : {
+					[Op.not] : null
+				}
+			},
+			paranoid : false,
+			include : ['images']
+		})
+			.then(products => res.render('recycle', {
+				products,
+				toThousand
+			}))
+			.catch(error => console.log(error))
+	},
+	restore : (req,res) => {
+		db.Product.restore({
+			where : {
+				id : req.params.id
+			}
+		})
+		.then((info) => {
+			console.log('>>>>>>>>>>>>>>>>>>>>>>>>',info);
+			return res.redirect('/products');
+		})
+		.catch(error => console.log(error))
 	}
 };
 

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('partials/head', {title: 'Resultados de tu búsqueda'}) %>
+<body>
+	<!-- Header -->
+	<%- include('partials/headerNavbar') %>
+	<!-- /Header -->
+	
+	<!-- Banner -->
+	<div class="banner"></div>
+	<!-- /Banner -->
+
+	<!-- todos los productos -->
+	<div class="container products-wrapper">
+		<div class="row">
+			<div class="col-12">
+				<h2 class="products-title">Recuperación de productos</h2>
+			</div>
+            <% if (products.length > 0) { %>
+
+            <div class="table-responsive">
+                <table class="table h2">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <% products.forEach(product => { %>
+                            <tr>
+                                <th scope="row"><%= product.id %></th>
+                                <td><%= product.title %> </td>
+                                <td>
+                                    <div>
+                                        <form action="/products/restore/<%= product.id %>" method="POST">
+                                            <button type="submit" class="btn btn-sm btn-success">Recuperar</button>
+                                        </form>
+                                        <form action="/products/destroy/<%= product.id %>?_method=DELETE" method="POST">
+                                            <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </form>
+                                    </div>
+                                </td>
+                              </tr>
+                        <% }) %>
+                    
+                    </tbody>
+                  </table>
+            </div>
+            <% }else { %>	
+                <div class="col-12">
+                    <h2 class="products-title" style="color: darkblue;">No hay productos en la papelera de reciclaje</h2>
+                </div>
+                <% } %>	
+		
+		</div>
+	</div>
+	<!-- /todos los productos -->
+
+	<!-- footer -->
+	<%- include('partials/footer') %>
+	<!-- /footer -->
+</body>	
+</html>

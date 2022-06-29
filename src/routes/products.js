@@ -39,7 +39,14 @@ router.put('/update/:id',upload.single('image'), productsController.update);
 
 
 /*** DELETE ONE PRODUCT***/ 
-router.delete('/delete/:id', productsController.destroy); 
+router.delete('/delete/:id', productsController.delete); 
+router.delete('/destroy/:id', productsController.destroy); 
+
+/*** RESTORE ONE PRODUCT***/ 
+router.post('/restore/:id', productsController.restore); 
+
+/*** GET ALL PRODUCTS RECYCLES ***/ 
+router.get('/recycles', productsController.recycle); 
 
 
 module.exports = router;
