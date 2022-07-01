@@ -1,16 +1,13 @@
 # MERCADO LIEBRE - MVC v14
 > Developed by Eric for Comisión 14 | Fundación Formar
 ## Indice
-- [COTIZADOR DE CORTINAS](#cotizador-de-cortinas)
+- Mercado Liebre v14
   - [Indice](#indice)
     - [Información General](#información-general)
     - [Screenshot](#screenshot)
   - [Dependencias](#dependencias)
   - [Instalación](#instalación)
   - [Base de datos](#base-de-datos)
-    - [Crear la base de datos con **migraciones**](#crear-la-base-de-datos-con-migraciones)
-    - [Crear la base de datos ejecutando un script](#crear-la-base-de-datos-ejecutando-un-script)
-  - [Deploy](#deploy)
 ### Información General
 ***
 Sitio creado con Node y Express en el ámbito del curso de Fullstack Web de Fundación Formar y Digital House. 
