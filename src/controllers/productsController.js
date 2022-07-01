@@ -147,33 +147,6 @@ const controller = {
 			})
 			.catch(error => console.log(error))
 	},
-	destroy : (req, res) => {
-
-		db.Image.findAll({
-			where : {
-				productId : req.params.id
-			}
-		})
-			.then(images => {
-				images.forEach(image => {
-					if(fs.existsSync(path.resolve(__dirname,'../../public/images/products/' + image.file))){
-						console.log(image.file)
-						fs.unlinkSync(path.resolve(__dirname,'../../public/images/products/' + image.file))
-					}
-				});
-				db.Product.destroy({
-					where : {
-						id : req.params.id
-					},
-					force : true
-				})
-					.then((info) => {
-						console.log('>>>>>>>>>>>>>>>>>>>>>>>>',info);
-						return res.redirect('/products');
-					})
-			})
-			.catch(error => console.log(error))
-	},
 	recycle : (req,res) => {
 		db.Product.findAll({
 			where : {
@@ -201,7 +174,34 @@ const controller = {
 			return res.redirect('/products');
 		})
 		.catch(error => console.log(error))
-	}
+	},
+	destroy : (req, res) => {
+
+		db.Image.findAll({
+			where : {
+				productId : req.params.id
+			}
+		})
+			.then(images => {
+				images.forEach(image => {
+					if(fs.existsSync(path.resolve(__dirname,'../../public/images/products/' + image.file))){
+						console.log(image.file)
+						fs.unlinkSync(path.resolve(__dirname,'../../public/images/products/' + image.file))
+					}
+				});
+				db.Product.destroy({
+					where : {
+						id : req.params.id
+					},
+					force : true
+				})
+					.then((info) => {
+						console.log('>>>>>>>>>>>>>>>>>>>>>>>>',info);
+						return res.redirect('/products');
+					})
+			})
+			.catch(error => console.log(error))
+	},
 };
 
 module.exports = controller;

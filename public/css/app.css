@@ -30,6 +30,9 @@ body {
   font-family: var(--base-font-family);
   font-weight: 300;
   background-color: var(--light-gray);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 ul,

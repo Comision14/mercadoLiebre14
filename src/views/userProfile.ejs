@@ -14,7 +14,7 @@
         </div>
         <div class="col-12">
          
-                <form action="/users/updateProfile/<%= user.id %> ?_method=PUT" method="POST"
+                <form action="/users/update?_method=PUT" method="POST"
                   enctype="multipart/form-data">
                   <div class="row product-detail">
                     <div class="col-12 col-md-4 d-flex flex-column align-items-center justify-content-between">
@@ -30,34 +30,39 @@
                         <div class="form-group col-12 col-md-6 ">
                           <label class="form-label" for="name">Nombre</label>
                           <input type="text" name="name" class="form-input" id="name"
-                            value=<%= user.name %> >
+                            value="<%= user.name %>" >
                         </div>
                         <div class="form-group col-12 col-md-6">
                           <label class="form-label"  for="surname">Apellido</label>
                           <input type="text" name="surname" class="form-input" id="surname"
-                            value=<%= user.surname %> >
+                            value="<%= user.surname %>" >
                         </div>
                         <div class="form-group col-12 col-md-6">
-                          <label class="form-label" for="email">Email</label>
-                          <input type="email" name="email" class="form-input" id="email"
-                            value=<%= user.email %> >
+                          <label class="form-label" for="password">Nueva contraseña</label>
+                          <input type="password" name="password" class="form-input" id="password" autocomplete="off">
                         </div>
                         <div class="form-group col-12 col-md-6">
-                          <label class="form-label" for="birthday">Fecha de nacimiento</label>
-                          <input type="date" name="birthday" class="form-input" id="birthday"
-                            value=<%= user.birthday %>>
+                          <label class="form-label" for="password2">Confirmar contraseña</label>
+                          <input type="password" name="password2" class="form-input" id="password2" autocomplete="off">
                         </div>
-                        <div class="form-group col-12">
-                          <label class="form-label" for="inputAddress2">Dirección</label>
-                          <input type="text" name="direccion" class="form-input" id="inputAddress2"
+                        <div class="form-group col-12  col-md-6">
+                          <label class="form-label" for="address">Dirección</label>
+                          <input type="text" name="address" class="form-input" id="address"
                             value="<%= user.addresses[0].address %>">
                         </div>
+                        <div class="form-group col-12  col-md-6">
+                          <label class="form-label" for="type">Tipo</label>
+                          <select class="form-input" name="type" id="type" style="background-color: white;">
+                            <% types.forEach(type => { %>
+                                <option value="<%= type.id %>" <%= type.id == user.addresses[0].typeId && 'selected' %> ><%= type.name %></option>
+                            <% }) %>
+                          </select>
+                        </div>
                         <div class="form-group col-12 col-md-6">
-                          <label class="form-label" for="imputCiudad">Ciudad</label>
-                          <input type="text" name="ciudad" class="form-input" id="inputCiudad"
+                          <label class="form-label" for="city">Ciudad</label>
+                          <input type="text" name="city" class="form-input" id="city"
                             value="<%= user.addresses[0].city %>">
                           <select class="form-input" id="ciudadSelect" style="display: none;"></select>
-
                         </div>
                         <div class="form-group col-12 col-md-6">
                           <label class="form-label" for="state">Provincia</label>
@@ -68,9 +73,6 @@
                         </div>
                       </div>
                       <div class="d-md-flex justify-content-end mt-5">
-                          <form action="/users/delete/<%= user.id %>?_method=DELETE" method="POST">
-                            <button type="submit" class="danger-button  m-1">Darse de baja</button>
-                          </form>
                         <button type="button" class="cancel-button m-1"><a href="/" class="text-light">Salir sin
                             guardar</a></button>
                         <button type="submit" class="buy-now-button m-1">Actualizar datos</button>

@@ -1,10 +1,6 @@
 const bcryptjs = require("bcryptjs");
-const fs = require("fs");
-const path = require("path");
 const { validationResult } = require("express-validator");
 const db = require('../database/models');
-
-const users = require("../data/usersDataBase.json");
 
 module.exports = {
   register: (req, res) => {
@@ -20,7 +16,6 @@ module.exports = {
         surname: surname.trim(),
         email: email.trim(),
         password: bcryptjs.hashSync(pass, 10),
-        image: "default.png",
         rolId: 2,
       })
         .then(user => {
@@ -74,12 +69,52 @@ module.exports = {
     }
   },
   profile: (req, res) => {
-    db.User.findByPk(req.session.userLogin.id,{
+    let user = db.User.findByPk(req.session.userLogin.id,{
       include : ['addresses']
     })
-      .then(user => res.render("userProfile", {
-        user
+    let types = db.Type.findAll()
+    Promise.all([user,types])
+      .then(([user,types]) => res.render("userProfile", {
+        user,
+        types
       }))
+  },
+  update : (req,res) => {
+    const {name,surname,password, address, city, state, type} = req.body;
+    db.User.findByPk(req.session.userLogin.id,{
+      attributes : ['password']
+    })
+      .then(user => {
+        db.User.update(
+          {
+            name : name.trim(),
+            surname : surname.trim(),
+            password : password ? bcryptjs.hashSync(password, 10) : user.password,
+            image : req.file && req.file.filename 
+          },
+          {
+            where : {
+              id : req.session.userLogin.id
+            }
+          }
+        )
+          .then( () => {
+            db.Address.update(
+              {
+                address : address.trim(),
+                city,
+                state,
+                typeId : type
+              },
+              {
+                where : {
+                  userId : req.session.userLogin.id
+                }
+              }
+            ).then( () => res.redirect('/users/profile'))
+          })
+      }).catch(error => console.log(error))
+  
   },
   logout : (req,res) => {
     req.session.destroy();
