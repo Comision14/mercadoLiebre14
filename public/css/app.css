@@ -23,15 +23,14 @@ html,
 body {
   min-height: 100vh;
   margin: 0;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 body {
   font-family: var(--base-font-family);
   font-weight: 300;
   background-color: var(--light-gray);
-  display: flex;
-  flex-direction: column;
+
   justify-content: space-between;
 }
 

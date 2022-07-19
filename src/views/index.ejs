@@ -6,7 +6,9 @@
 	<!-- Header -->
 	<%- include('partials/headerNavbar') %>
 	<!-- /Header -->
-	
+	<% if (userLogin?.rol === 1) { %>
+		<%- include('admin') %> 
+	<% }else{ %>
 	<!-- Banner -->
 	<div class="banner"></div>
 	<!-- /Banner -->
@@ -79,5 +81,7 @@
 	<!-- footer -->
 	<%- include('partials/footer') %>
 	<!-- /footer -->
+	<script src="/js/home.js"></script>
+	<% } %>
 </body>	
 </html>

@@ -23,11 +23,15 @@ const controller = {
 			},
 			include : ['images']
 		})
-		Promise.all([productsVisited,productsInSale])
-			.then(([productsVisited,productsInSale]) => {
+		let products = db.Product.findAll({
+			include : ['category','images']
+		})
+		Promise.all([productsVisited,productsInSale, products])
+			.then(([productsVisited,productsInSale, products]) => {
 				return res.render('index',{
 					productsVisited,
 					productsInSale,
+					products,
 					toThousand
 				})
 			})
