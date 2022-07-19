@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 // ************ Controller Require ************
-const {register,login,profile,processRegister,processLogin,logout, update} = require('../controllers/usersController');
+const {register,login,profile,processRegister,processLogin,logout, update, checkEmail} = require('../controllers/usersController');
 
 // ************ Requiero multer ************
 const {uploadImgUser} = require('../middlewares/upImages')
@@ -21,5 +21,8 @@ router
     .get('/profile',userCheck, profile)
     .put('/update',userCheck,uploadImgUser.single('image'),update)
     .get('/logout',logout)
+
+    /* APIs */
+    .post('/api/check-email',checkEmail);
 
 module.exports = router;

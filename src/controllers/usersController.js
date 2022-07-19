@@ -120,5 +120,28 @@ module.exports = {
     req.session.destroy();
     res.cookie('mercadoLiebre14',null,{maxAge : -1})
     res.redirect('/')
+  },
+  /* APIs */
+  checkEmail : async (req,res) => {
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',req.body)
+    try {
+      let user = await db.User.findOne({
+          where : {
+            email : req.body.email
+          }
+      })
+      let response = {
+        ok: true,
+        data : user ? true : false
+      }
+      return res.status(200).json(response)
+      
+    } catch (error) {
+      console.log(error)
+      return res.status(error.status || 500).json({
+        ok : false,
+        msg : error.message || 'Comuníquese con el administrador del sitio'
+      })
+    }
   }
 };

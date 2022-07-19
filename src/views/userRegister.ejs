@@ -12,23 +12,23 @@
           <h2 class="products-title">Registrate</h2>
         </div>
           <div class="col-12">
-                <form id="register" action="" method="POST">
+                <form id="form-register" action="" method="POST" novalidate>
 
                   <div class="row product-detail">
 
                       <div class="col-12 col-md-6">
                         <label for="name" class="form-label">Nombre</label>
                         <input type="text"
-                        class="form-input" 
+                        class="form-input form-control" 
                         value="<%= locals.old && old.name ? old.name : null %>"
                         id="name"  name="name" title="El nombre debe tener más de dos caracteres"/>
-                        <span id="errorNombre" class="text-danger"><%= locals.errors && errors.name ? errors.name.msg : null %> </span>
+                        <small id="errorNombre" class="text-danger"><%= locals.errors && errors.name ? errors.name.msg : null %> </small>
                       </div>
                       <div class="col-12 col-md-6">
                         <label for="surname" class="form-label">Apellido</label>
                         <input type="text"
                         value="<%= locals.old && old.surname ? old.surname : null %>"
-                        class="form-input"
+                        class="form-input form-control"
                         id="surname" name="surname" title="El apellido debe tener más de dos caracteres"/>
                         <small id="errorApellido" class="text-danger"><%= locals.errors && errors.surname ? errors.surname.msg : null %></small>
                       </div>
@@ -36,21 +36,21 @@
                         <label for="email" class="form-label">Email</label>
                         <input type="email"
                         value="<%= locals.old && old.email ? old.email : null %>"
-                        class="form-input"
+                        class="form-input form-control"
                         id="email" name="email"/>
                         <small id="errorEmail" class="text-danger"><%= locals.errors && errors.email ? errors.email.msg : null %></small>
                       </div>
                     <div class="col-12 col-md-6">
                         <label for="pass" class="form-label">Contraseña</label>
                         <input type="password"
-                        class="form-input" name="pass"/>
+                        class="form-input form-control" name="pass" id="pass"/>
                         <small id="errorPass" class="text-danger"><%= locals.errors && errors.pass ? errors.pass.msg : null %></small>
                       </div>
 
                       <div class="col-12 col-md-6">
                         <label for="pass2" class="form-label">Reingresar contraseña</label>
                         <input type="password"
-                        class="form-input"
+                        class="form-input form-control"
                         id="pass2" name="pass2"/>
                         <small id="errorPass2" class= "text-danger"><%= locals.errors && errors.pass2 ? errors.pass2.msg : null %></small>
 
@@ -58,29 +58,32 @@
                       <div class="col-12 col-md-6">
                       <div class="d-flex justify-content-around align-items-end mt-5">
                         <div class="form-check ">
-                          <input name="bases" class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="width:30px; height:30px;">
-                          <label class="form-check-label form-label ms-2" for="flexCheckDefault">
+                          <input name="bases" class="form-check-input form-control" type="checkbox" value="" id="terms" style="width:30px; height:30px;">
+                          <label class="form-check-label form-label ms-2" for="terms">
                             Acepto las bases y condiciones
                           </label>
                         </div>
-                        <small id="errorBases" class= "text-danger"><%= locals.errors && errors.bases ? errors.bases.msg : null %></small>
+                        <small id="errorTerms" class= "text-danger"><%= locals.errors && errors.bases ? errors.bases.msg : null %></small>
 
-                        <button type="submit" class="buy-now-button">
-                          Registrarse
-                        </button>
+                      
                       </div>
-                       
+                   
                         </div>
                        
+                        <div class="col-12 d-flex justify-content-end gap-2">
+                          <span id="msgError" class="text-danger"></span>
+
+                          <button type="submit" class="buy-now-button">
+                            Registrarse
+                          </button>
+
+                         
+                        </div>
 
                     </div>
                     
                       </div>
-                        <div class="col-12 col-lg-6">
-                          <span id="msgError" class="text-danger"></span>
-
-                         
-                        </div>
+                      
 
                       </div>
 
@@ -93,5 +96,6 @@
     </div>
 
     <%- include('partials/footer') %>
+    <script src="/js/register.js"></script>
   </body>
 </html>
