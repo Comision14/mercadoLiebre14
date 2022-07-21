@@ -40,10 +40,14 @@ module.exports = [
       max: 12,
     })
     .withMessage(
-      "La contraseña debe tener un mínio de 6 y un máximo de 12 caracteres"
+      "La contraseña debe tener entre 6 y 12 caracteres"
     ),
 
   body("pass2")
+    .notEmpty()
+    .withMessage(
+      "Debes validar tu contraseña"
+    )
     .custom((value, { req }) => {
       if (value !== req.body.pass) {
         return false;

@@ -138,7 +138,8 @@ $('pass2').addEventListener('blur', async function(){
 
 $('terms').addEventListener('click', function() {
     this.classList.remove('is-invalid');
-    this.classList.toggle('is-valid');
+    $('errorTerms').innerHTML = null
+
 })
 
 
