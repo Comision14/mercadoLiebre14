@@ -82,7 +82,7 @@
 		</div>
 		<div class="modal-footer">
 			<div id="btn-buy">
-				<button id="btn-cart-removeAll" type="button" class="btn btn-danger" value="<%= locals.userLogin && userLogin.order?.id %>">Vaciar carrito</button>
+				<button id="btn-cart-removeAll" type="button" class="btn btn-danger" value="<%= locals.userLogin && userLogin.order && userLogin.order.id %>">Vaciar carrito</button>
 				<button type="button" class="btn btn-primary">Finalizar compra</button> 
 			</div>
 		<button type="button" class="btn btn-success" data-bs-dismiss="modal">Seguir comprando</button>
