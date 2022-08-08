@@ -35,5 +35,4 @@ router.post('/restore/:id', productsController.restore);
 /*** GET ALL PRODUCTS RECYCLES ***/ 
 router.get('/recycles', productsController.recycle); 
 
-
 module.exports = router;

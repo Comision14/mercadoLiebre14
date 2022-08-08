@@ -48,17 +48,38 @@ module.exports = {
         where : {
           email
         }
-      }).then( ({id,name,image, rolId}) => {
+      }).then( async ({id,name,image, rolId}) => {
+
+        let order = await db.Order.findOne({
+          where : {
+            userId : id,
+            statusId : 1
+          },
+          include : [
+            {
+              association : 'carts',
+              attributes : ['id','quantity'],
+              include : [
+                {
+                  association : 'product',
+                  include : ['images'],
+                  attributes : ['id','title','price','discount']
+                }
+              ]
+            }
+          ]
+        })
         req.session.userLogin = {
           id : +id,
           name,
           image,
-          rol : +rolId
+          rol : +rolId,
+          order
       }
       if(req.body.remember){
           res.cookie('mercadoLiebre14',req.session.userLogin,{maxAge:1000*60*2})
       }
-      res.redirect('/')
+      return res.redirect('/?user=true')
       })
       
     } else {

@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey : 'userId',
         onDelete: 'cascade'
       })
+      User.hasMany(models.Order,{
+        as : 'orders',
+        foreignKey : 'userId',
+      })
     }
   }
   User.init({
