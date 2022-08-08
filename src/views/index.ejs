@@ -6,7 +6,7 @@
 	<!-- Header -->
 	<%- include('partials/headerNavbar') %>
 	<!-- /Header -->
-	<% if (userLogin?.rol === 1) { %>
+	<% if (userLogin && userLogin.rol === 1) { %>
 		<%- include('admin') %> 
 	<% }else{ %>
 	<!-- Banner -->
