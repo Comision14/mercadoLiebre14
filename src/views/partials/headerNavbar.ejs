@@ -23,7 +23,7 @@
 
 		<nav class="main-navbar">
 			<ul class="left-navbar">
-				<% if(locals.userLogin?.rol === 1){ %> 
+				<% if(locals.userLogin && locals.userLogin.rol === 1){ %> 
 					<li><a href="/products/create">Agregar producto</a></li>
 					<li><a href="/products/recycles">Productos eliminados</a></li>
 				<% }else{ %>
