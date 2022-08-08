@@ -29,7 +29,7 @@ const getOrder = async (id) => {
 
 module.exports = {
   list: async (req, res) => {
-    if (req.session.userLogin?.order) {
+    if (req.session.userLogin && req.session.userLogin.order) {
       return res.status(200).json({
         ok: true,
         order: req.session.userLogin.order.id,
